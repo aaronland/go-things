@@ -1,0 +1,10 @@
+module github.com/aaronland/go-things
+
+require (
+	github.com/whosonfirst/go-reader v0.0.0-20191122203133-047f20452865
+	github.com/whosonfirst/go-whosonfirst-geojson-v2 v0.12.2
+	github.com/whosonfirst/go-whosonfirst-placetypes v0.12.2
+	github.com/tidwall/gjson v1.3.6
+)
+
+go 1.12

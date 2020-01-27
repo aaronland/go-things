@@ -1,0 +1,41 @@
+{{ define "things" }}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>Things</title>
+
+      <script src="/javascript/things.placeholder.client.js"></script>
+      <script src="/javascript/things.api.js"></script>            
+      <script src="/javascript/things.init.js"></script>
+  </head>
+  <body>
+
+      <div class="container">            
+
+	  <div class="row" id="query">
+	      
+	      <form>
+		  <input type="text" name="place" id="place" value="" placeholder="choose a place" />
+	      </form>
+	      
+	  </div>
+
+	  <div class="row" id="results">
+	  </div>
+
+	  <div class="row" id="thing-form" style="display:none;">
+
+	      <span id="thing-label"></span>
+	      
+	      <form>
+		  <textarea name="thing-body" id="thing-body" data-whosonfirst-id=""></textarea>
+		  <button id="thing-submit" type="submit" class="btn btn-primary">Add</button>
+	      </form>
+	      
+	  </div>
+	  
+      </div>
+      
+  </body>
+</html>
+{{ end }}
