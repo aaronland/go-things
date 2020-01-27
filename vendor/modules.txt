@@ -4,8 +4,15 @@ github.com/aaronland/go-artisanal-integers
 github.com/aaronland/go-artisanal-integers-proxy/service
 # github.com/aaronland/go-brooklynintegers-api v1.1.0
 github.com/aaronland/go-brooklynintegers-api
+# github.com/aaronland/go-http-bootstrap v0.0.5
+github.com/aaronland/go-http-bootstrap
+github.com/aaronland/go-http-bootstrap/resources
+# github.com/aaronland/go-http-leaflet v0.0.2
+github.com/aaronland/go-http-leaflet
 # github.com/aaronland/go-http-rewrite v0.0.4
 github.com/aaronland/go-http-rewrite
+# github.com/aaronland/go-http-tangramjs v0.0.5
+github.com/aaronland/go-http-tangramjs
 # github.com/aaronland/go-pool v0.0.0-20191128211702-88306299c758
 github.com/aaronland/go-pool
 # github.com/aaronland/go-roster v0.0.1
@@ -85,6 +92,6 @@ github.com/whosonfirst/go-whosonfirst-writer
 github.com/whosonfirst/go-writer
 # github.com/whosonfirst/warning v0.1.0
 github.com/whosonfirst/warning
-# golang.org/x/net v0.0.0-20190613194153-d28f0bde5980
+# golang.org/x/net v0.0.0-20190628185345-da137c7871d7
 golang.org/x/net/html
 golang.org/x/net/html/atom

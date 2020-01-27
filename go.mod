@@ -3,7 +3,9 @@ module github.com/aaronland/go-things
 go 1.12
 
 require (
+	github.com/aaronland/go-http-bootstrap v0.0.5
 	github.com/aaronland/go-http-rewrite v0.0.4
+	github.com/aaronland/go-http-tangramjs v0.0.5
 	github.com/tidwall/gjson v1.3.6
 	github.com/whosonfirst/go-bindata v0.1.0
 	github.com/whosonfirst/go-bindata-assetfs v1.0.1

@@ -8,6 +8,8 @@ import (
 	"context"
 	_ "github.com/aaronland/go-things"
 	"github.com/aaronland/go-things/http"
+	"github.com/aaronland/go-http-bootstrap"
+	_ "github.com/aaronland/go-http-tangramjs"	
 	"github.com/aaronland/go-things/assets/templates"			
 	"github.com/whosonfirst/go-reader"
 	"github.com/whosonfirst/go-writer"
@@ -79,6 +81,8 @@ func main() {
 	}
 
 	// end of sudo put me in a package
+
+	bootstrap_opts := bootstrap.DefaultBootstrapOptions()
 	
 	mux := gohttp.NewServeMux()
 
@@ -91,6 +95,12 @@ func main() {
 	mux.Handle("/ping", ping_handler)
 
 	//
+
+	err = bootstrap.AppendAssetHandlers(mux)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 	
 	err = http.AppendStaticAssetHandlers(mux)
 	
@@ -112,6 +122,8 @@ func main() {
 		log.Fatal(err)
 	}
 
+	things_handler = bootstrap.AppendResourcesHandler(things_handler, bootstrap_opts)
+	
 	mux.Handle("/", things_handler)
 	
 	add_opts := http.AddThingHandlerOptions{
@@ -128,7 +140,7 @@ func main() {
 	mux.Handle("/add/", add_handler)
 	
 	//
-	
+
 	addr := fmt.Sprintf("%s:%d", *host, *port)
 	log.Printf("Listening on %s\n", addr)
 	
