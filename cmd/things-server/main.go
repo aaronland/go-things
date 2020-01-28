@@ -9,7 +9,7 @@ import (
 	_ "github.com/aaronland/go-things"
 	"github.com/aaronland/go-things/http"
 	"github.com/aaronland/go-http-bootstrap"
-	_ "github.com/aaronland/go-http-tangramjs"	
+	"github.com/aaronland/go-http-crumb"	
 	"github.com/aaronland/go-things/assets/templates"			
 	"github.com/whosonfirst/go-reader"
 	"github.com/whosonfirst/go-writer"
@@ -28,6 +28,8 @@ func main() {
 	reader_source := flag.String("reader-source", "", "...")
 	writer_source := flag.String("writer-source", "", "...")
 
+	crumb_dsn := flag.String("crumb-dsn", "", "...")
+	
 	path_templates := flag.String("templates", "", "An optional string for local templates. This is anything that can be read by the 'templates.ParseGlob' method.")
 	
 	flag.Parse()
@@ -46,6 +48,12 @@ func main() {
 		log.Fatal(err)
 	}
 
+	cr_config, err := crumb.NewCrumbConfigFromDSN(*crumb_dsn)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	
 	// start of sudo put me in a package
 
 	t := template.New("things").Funcs(template.FuncMap{
@@ -123,6 +131,7 @@ func main() {
 	}
 
 	things_handler = bootstrap.AppendResourcesHandler(things_handler, bootstrap_opts)
+	things_handler = crumb.EnsureCrumbHandler(cr_config, things_handler)
 	
 	mux.Handle("/", things_handler)
 	
@@ -136,6 +145,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	add_handler = crumb.EnsureCrumbHandler(cr_config, add_handler)
 	
 	mux.Handle("/add/", add_handler)
 	
