@@ -15,10 +15,6 @@ things.api = (function(){
 
 	    var str_thing = JSON.stringify(thing);
 	    
-	    var form_data = new FormData();
-	    form_data["id"] = depicts_id;
-	    form_data["text"]= text;
-	    
 	    var on_load = function(rsp){
 
 		var target = rsp.target;

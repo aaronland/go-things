@@ -1,0 +1,32 @@
+#query {
+	float:left;
+}
+
+.select-menu {
+	padding: 0px;
+	margin: 0px;
+	max-height:50vh;
+	max-width:50vw;
+	overflow:scroll;
+	padding-left:14px;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;		
+}
+
+.select-menu li {
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;	
+	padding: .5rem;
+	list-style-type: none;
+}
+
+.select-menu li:hover {
+	background-color:#ccc;
+}
+
+#thing-body {
+	width:80vw;
+	height:30vh;
+	border:solid thin;
+}

@@ -8,7 +8,28 @@ window.addEventListener("load", function load(event){
     var thing_label = document.getElementById("thing-label");
     var thing_body = document.getElementById("thing-body");
     var thing_submit = document.getElementById("thing-submit");        
+    var thing_cancel = document.getElementById("thing-cancel");
 
+    var reset_form = function(){
+
+	thing_body.removeAttribute("data-whosonfirst-id");
+	thing_body.value = "";
+	thing_label.innerText = "";
+
+	thing_form.style.display = "none";
+	
+	results.innerHTML = "";
+	results.style.display = "none";
+	
+	query.style.display = "block";
+	pl.value = "";	
+    };
+    
+    thing_cancel.onclick = function(){
+	reset_form();
+	return false;
+    }
+    
     thing_submit.onclick = function(){
     
 	var depicts_id = thing_body.getAttribute("data-whosonfirst-id");
@@ -16,23 +37,23 @@ window.addEventListener("load", function load(event){
 	
 	var text = thing_body.value;
 
-	console.log(depicts_id, text);
-
 	try {
 	    
 	    var on_success = function(rsp){
-		console.log("OKAY", rsp);
+		console.log("OKAY", rsp);		
+		reset_form();
 	    };
 	    
 	    var on_error = function(err){
-		console.log("ERROR", err);
+		console.log("ERROR", err);		
+		reset_form();		
 	    };
 
 	    things.api.add(depicts_id, text, on_success, on_error);
 	    
 	} catch (e){
-
 	    console.log("SAD", e);
+	    reset_form();
 	}
 
 	return false;
@@ -40,6 +61,7 @@ window.addEventListener("load", function load(event){
     
     var draw_thing = function(name, id){
 
+	query.style.display = "none";
 	results.style.display = "none";
 	thing_form.style.display = "block";
 
@@ -54,9 +76,11 @@ window.addEventListener("load", function load(event){
     
     var draw_results = function(results){
 
-	var count = results.length;	
+	var count = results.length;
+	
 	var list = document.createElement("ul");
-
+	list.setAttribute("class", "select-menu");
+	
 	for (var i=0; i < count; i++){
 
 	    var r = results[i];
@@ -65,31 +89,41 @@ window.addEventListener("load", function load(event){
 	    var name = r.name;
 	    var placetype = r.placetype;
 	    
-	    var label = name;
+	    var label = [];
 
 	    var lineage = r.lineage;
 	    lineage = lineage[0];
 
-	    try {
-		var region = lineage.region;
-		label = label + ", " + region.name;		
-	    } catch (e) {
-		// console.log("REGION", e);
+	    if (lineage.neighbourhood){
+		label.push(" (" + lineage.neighbourhood.name + ")");
+	    }
+	    	    
+	    if (lineage.macrohood){
+		label.push(" (" + lineage.macrohood.name + ")");
 	    }
 	    
-	    try {
-		var country = lineage.country;
-		label = label + ", " + country.name;
-	    } catch (e) {
-		// console.log("COUNTRY", e);
+	    if (lineage.locality){
+		label.push(lineage.locality.name);
 	    }
 
-	    label = label + " (" + placetype + ")";
+	    if (lineage.county){
+		label.push(" (" + lineage.county.name + ")");
+	    }
+	    
+	    if (lineage.region){
+		label.push(lineage.region.name);		
+	    }
+
+	    if (lineage.country){
+		label.push(lineage.country.name);
+	    }
+
+	    var str_label = label.join(", ");
 
 	    var item = document.createElement("li");
 	    item.setAttribute("data-whosonfirst-id", id);
-	    item.setAttribute("data-whosonfirst-name", name);	    
-	    item.appendChild(document.createTextNode(label));
+	    item.setAttribute("data-whosonfirst-name", str_label);    
+	    item.appendChild(document.createTextNode(str_label));
 
 	    item.onclick = function(e){
 
@@ -107,6 +141,7 @@ window.addEventListener("load", function load(event){
 	results.innerHTML = "";
 
 	results.appendChild(list);
+	results.style.display = "block";
     };
     
     pl.oninput = function(e) {
@@ -114,8 +149,6 @@ window.addEventListener("load", function load(event){
 	var el = e.target;
 	var text = el.value;
 
-	console.log("TEXT", text);
-	
 	if (text.length < 3){
 	    return;
 	}
@@ -127,8 +160,6 @@ window.addEventListener("load", function load(event){
 	var on_error = function(err){
 	    console.log("SAD", err);
 	};
-
-	console.log("SEARCH", text);
 
 	try {
 	    things.placeholder.client.search(text, on_success, on_error);
