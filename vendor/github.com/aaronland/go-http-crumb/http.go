@@ -76,19 +76,12 @@ func EnsureCrumbHandlerWithErrorHandler(cfg *CrumbConfig, next_handler go_http.H
 
 		switch req.Method {
 
-		case "POST", "PUT":
+		case "POST":
 
-			var crumb_var string
-			var crumb_err error
+			crumb_var, err := sanitize.PostString(req, "crumb")
 
-			if req.Method == "POST" {
-				crumb_var, crumb_err = sanitize.PostString(req, "crumb")
-			} else {
-				crumb_var, crumb_err = sanitize.GetString(req, "crumb")
-			}
-			
-			if crumb_err != nil {
-				req = SetErrorContextWithRequest(req, crumb_err, go_http.StatusBadRequest)
+			if err != nil {
+				req = SetErrorContextWithRequest(req, err, go_http.StatusBadRequest)
 				error_handler.ServeHTTP(rsp, req)
 				return
 			}

@@ -1,2 +1,0 @@
-# github.com/whosonfirst/go-sanitize v0.1.0
-github.com/whosonfirst/go-sanitize

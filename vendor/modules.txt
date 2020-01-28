@@ -7,17 +7,18 @@ github.com/aaronland/go-brooklynintegers-api
 # github.com/aaronland/go-http-bootstrap v0.0.5
 github.com/aaronland/go-http-bootstrap
 github.com/aaronland/go-http-bootstrap/resources
-# github.com/aaronland/go-http-leaflet v0.0.2
-github.com/aaronland/go-http-leaflet
+# github.com/aaronland/go-http-crumb v0.0.4
+github.com/aaronland/go-http-crumb
 # github.com/aaronland/go-http-rewrite v0.0.4
 github.com/aaronland/go-http-rewrite
-# github.com/aaronland/go-http-tangramjs v0.0.5
-github.com/aaronland/go-http-tangramjs
+# github.com/aaronland/go-http-sanitize v0.0.1
+github.com/aaronland/go-http-sanitize
 # github.com/aaronland/go-pool v0.0.0-20191128211702-88306299c758
 github.com/aaronland/go-pool
 # github.com/aaronland/go-roster v0.0.1
 github.com/aaronland/go-roster
 # github.com/aaronland/go-string v0.1.1
+github.com/aaronland/go-string/dsn
 github.com/aaronland/go-string/random
 # github.com/aaronland/go-uid v0.0.2
 github.com/aaronland/go-uid
@@ -54,6 +55,8 @@ github.com/whosonfirst/go-bindata
 github.com/whosonfirst/go-bindata-assetfs
 # github.com/whosonfirst/go-reader v0.0.4
 github.com/whosonfirst/go-reader
+# github.com/whosonfirst/go-sanitize v0.1.0
+github.com/whosonfirst/go-sanitize
 # github.com/whosonfirst/go-whosonfirst-export v0.3.0
 github.com/whosonfirst/go-whosonfirst-export
 github.com/whosonfirst/go-whosonfirst-export/options

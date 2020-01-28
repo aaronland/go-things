@@ -53,7 +53,6 @@ type CrumbConfig struct {
 	Separator string
 	Secret    string
 	TTL       int64
-	Key string
 }
 
 func NewCrumbConfigFromDSN(crumb_dsn string) (*CrumbConfig, error) {
@@ -98,12 +97,6 @@ func NewCrumbConfigFromDSN(crumb_dsn string) (*CrumbConfig, error) {
 		TTL:       ttl,
 	}
 
-	key, ok := dsn_map["key"]
-
-	if ok {
-		cfg.Key = key
-	}
-	
 	return cfg, nil
 }
 
@@ -201,19 +194,13 @@ func ValidateCrumb(cfg *CrumbConfig, req *go_http.Request, enc_var string, extra
 }
 
 func CrumbKey(cfg *CrumbConfig, req *go_http.Request) string {
-
-	switch cfg.Key {
-	case "":
-		return req.URL.Path
-	default:
-		return cfg.Key
-	}
+	return req.URL.Path
 }
 
 func CrumbBase(cfg *CrumbConfig, req *go_http.Request, extra ...string) (string, error) {
 
 	crumb_key := CrumbKey(cfg, req)
-	
+
 	base := make([]string, 0)
 
 	base = append(base, crumb_key)
