@@ -6,12 +6,7 @@ things.api = (function(){
     
     var self = {
 
-	'add': function(depicts_id, text, on_success, on_error){
-
-	    var thing = {
-		'depicts_id': depicts_id,
-		'note': text,
-	    };
+	'add': function(thing, crumb, on_success, on_error){
 
 	    var str_thing = JSON.stringify(thing);
 	    
@@ -49,8 +44,9 @@ things.api = (function(){
 		on_error(e);
 	    };
 	    
-	    var uri = endpoint + "/add/";
-
+	    var uri = endpoint + "/add/?crumb=" + crumb;
+	    console.log("URI",uri);
+	    
 	    try {
 
 		console.log("GET",uri);

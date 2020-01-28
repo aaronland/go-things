@@ -85,12 +85,13 @@ things.placeholder.client = (function(){
 		
 		switch (r.placetype) {
 		    case "locality":
-		    filtered.push(r);
-		    break;
-		    case "neighbourhood":
-		    filtered.push(r);
+			filtered.push(r);
+			break;
+		    // case "neighbourhood":
+		    	// filtered.push(r);
+			// break;
 		    default:
-		    continue;
+			continue;
 		}
 	    }
 

@@ -28,7 +28,7 @@ func main() {
 	reader_source := flag.String("reader-source", "", "...")
 	writer_source := flag.String("writer-source", "", "...")
 
-	crumb_dsn := flag.String("crumb-dsn", "", "...")
+	crumb_dsn := flag.String("crumb-dsn", "secret=P3sbIgCiRHTKt8RqaudRfU8MdrkEnh7L ttl=300 separator=: extra=x key=/add/", "...")
 	
 	path_templates := flag.String("templates", "", "An optional string for local templates. This is anything that can be read by the 'templates.ParseGlob' method.")
 	

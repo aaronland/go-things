@@ -37,6 +37,8 @@ window.addEventListener("load", function load(event){
 	
 	var text = thing_body.value;
 
+	var crumb = document.body.getAttribute("data-crumb");
+	
 	try {
 	    
 	    var on_success = function(rsp){
@@ -49,7 +51,12 @@ window.addEventListener("load", function load(event){
 		reset_form();		
 	    };
 
-	    things.api.add(depicts_id, text, on_success, on_error);
+	    var thing = {
+		'depicts_id': depicts_id,
+		'note': text,
+	    };
+
+	    things.api.add(thing, crumb, on_success, on_error);
 	    
 	} catch (e){
 	    console.log("SAD", e);
@@ -67,11 +74,7 @@ window.addEventListener("load", function load(event){
 
 	thing_label.innerText = "Things I like about " + name;
 	
-	thing_body.setAttribute("data-whosonfirst-id", id);
-	// thing_body.innerHTML = "";
-	
-	console.log("THING", id);
-	
+	thing_body.setAttribute("data-whosonfirst-id", id);	
     };
     
     var draw_results = function(results){
