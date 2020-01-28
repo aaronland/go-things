@@ -8,6 +8,13 @@ things.api = (function(){
 
 	'add': function(depicts_id, text, on_success, on_error){
 
+	    var thing = {
+		'depicts_id': depicts_id,
+		'note': text,
+	    };
+
+	    var str_thing = JSON.stringify(thing);
+	    
 	    var form_data = new FormData();
 	    form_data["id"] = depicts_id;
 	    form_data["text"]= text;
@@ -29,12 +36,8 @@ things.api = (function(){
 		}
 		
 		try {
-		    var raw = target['responseText'];
-		    console.log("RAW", raw);
-		    
+		    var raw = target['responseText'];		    
 		    var data = JSON.parse(raw);
-		    console.log("DATA", data);
-		    
 		    on_success(data);
 		} catch (e) {
 		    on_error(e);
@@ -61,8 +64,8 @@ things.api = (function(){
 		req.addEventListener("error", on_failed);
 		req.addEventListener("abort", on_abort);
 		
-		req.open("POST", uri, true);
-		req.send(form_data);
+		req.open("PUT", uri, true);
+		req.send(str_thing);
 		
 	    } catch (e) {
 		on_error(e);

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"	
 	_ "errors"
+	"encoding/json"
 	"log"
 	gohttp "net/http"
 	"github.com/whosonfirst/go-reader"
@@ -12,7 +13,8 @@ import (
 	wof_writer "github.com/whosonfirst/go-whosonfirst-writer"	
 	"github.com/whosonfirst/go-whosonfirst-export"
 	"github.com/whosonfirst/go-whosonfirst-export/options"
-	"github.com/aaronland/go-things"		
+	"github.com/aaronland/go-things"
+	"github.com/whosonfirst/go-sanitize"			
 )
 
 type AddThingHandlerOptions struct {
@@ -22,30 +24,54 @@ type AddThingHandlerOptions struct {
 
 func AddThingHandler(opts AddThingHandlerOptions) (gohttp.Handler, error) {
 
+	s_opts := sanitize.DefaultOptions()
+
 	fn := func(rsp gohttp.ResponseWriter, req *gohttp.Request) {
 
-		ctx := req.Context()
-
-		log.Println("HELLO")
-		
-		if req.Method != "POST" {
+		switch req.Method {
+		case "PUT":
+			// pass
+		default:
 			gohttp.Error(rsp, "Method not allowed.", gohttp.StatusMethodNotAllowed)
 			return
 		}
+
+		var thing *things.Thing
+
+		decoder := json.NewDecoder(req.Body)
+		err := decoder.Decode(&thing)
+
+		if err != nil {
+			gohttp.Error(rsp, err.Error(), gohttp.StatusBadRequest)
+			return
+		}
+
+		depicts_id := thing.DepictsId
+		note := thing.Note
+
+		log.Println("THING", depicts_id, note)
 		
-		depicts_id := int64(-1)
-		text := ""
+		text, err := sanitize.SanitizeString(note, s_opts)
+
+		if err != nil {
+ 			gohttp.Error(rsp, err.Error(), gohttp.StatusBadRequest)
+			return
+		}
+		
+		ctx := req.Context()
 		
 		depicts, err := wof_reader.LoadFeatureFromID(ctx, opts.Reader, depicts_id)
 
 		if err != nil {
+			log.Println("SAD 2", err)			
  			gohttp.Error(rsp, err.Error(), gohttp.StatusInternalServerError)
 			return
 		}
 
-		thing, err := things.NewThing(ctx, depicts, text)
+		thing_f, err := things.NewThing(ctx, depicts, text)
 
 		if err != nil {
+			log.Println("SAD 3", err)			
 			gohttp.Error(rsp, err.Error(), gohttp.StatusInternalServerError)
 			return
 		}
@@ -60,9 +86,10 @@ func AddThingHandler(opts AddThingHandlerOptions) (gohttp.Handler, error) {
 			return
 		}
 	
-		err = export.Export(thing.Bytes(), ex_opts, bw)
+		err = export.Export(thing_f.Bytes(), ex_opts, bw)
 		
 		if err != nil {
+			log.Println("SAD 4", err)
 			gohttp.Error(rsp, err.Error(), gohttp.StatusInternalServerError)
 			return
 		}
@@ -73,6 +100,7 @@ func AddThingHandler(opts AddThingHandlerOptions) (gohttp.Handler, error) {
 		err = wof_writer.WriteFeatureBytes(ctx, opts.Writer, body)
 		
 		if err != nil {
+			log.Println("SAD 5", err)			
 			gohttp.Error(rsp, err.Error(), gohttp.StatusInternalServerError)			
 			return
 		}

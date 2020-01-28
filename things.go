@@ -15,6 +15,11 @@ import (
 	"time"
 )
 
+type Thing struct {
+	DepictsId int64 `json:"depicts_id"`
+	Note string `json:"note"`
+}
+
 type Geometry interface{}
 
 type Properties map[string]interface{}

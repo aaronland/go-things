@@ -12,6 +12,8 @@ window.addEventListener("load", function load(event){
     thing_submit.onclick = function(){
     
 	var depicts_id = thing_body.getAttribute("data-whosonfirst-id");
+	depicts_id = parseInt(depicts_id);
+	
 	var text = thing_body.value;
 
 	console.log(depicts_id, text);
@@ -25,7 +27,7 @@ window.addEventListener("load", function load(event){
 	    var on_error = function(err){
 		console.log("ERROR", err);
 	    };
-	    
+
 	    things.api.add(depicts_id, text, on_success, on_error);
 	    
 	} catch (e){
@@ -83,12 +85,17 @@ window.addEventListener("load", function load(event){
 	    }
 
 	    label = label + " (" + placetype + ")";
-	    
+
 	    var item = document.createElement("li");
 	    item.setAttribute("data-whosonfirst-id", id);
+	    item.setAttribute("data-whosonfirst-name", name);	    
 	    item.appendChild(document.createTextNode(label));
 
-	    item.onclick = function(){
+	    item.onclick = function(e){
+
+		var el = e.target;
+		var id = el.getAttribute("data-whosonfirst-id");
+		var name = el.getAttribute("data-whosonfirst-name");
 		draw_thing(name, id);
 		return false;
 	    };
