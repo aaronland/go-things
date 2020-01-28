@@ -12,7 +12,7 @@ things.placeholder.client = (function(){
 	},
 	
 	'search': function(text, on_success, on_error){
-	    
+
 	    var on_load = function(rsp){
 
 		var target = rsp.target;
@@ -30,9 +30,13 @@ things.placeholder.client = (function(){
 		}
 
 		try {
+		    
 		    var raw = target['responseText'];
 		    var data = JSON.parse(raw);
+
+		    data = self._filter_results(data);
 		    on_success(data);
+		    
 		} catch (e) {
 		    on_error(e);
 		}
@@ -48,7 +52,8 @@ things.placeholder.client = (function(){
 	    };
 	    
 	    var uri = endpoint + "/parser/search/?term=" + text;
-
+	    console.log("FETCH", uri);
+	    
 	    try {
 
 		console.log("GET",uri);
@@ -66,7 +71,32 @@ things.placeholder.client = (function(){
 		return false;
 	    }
 	    
+	},
+
+	'_filter_results': function(results){
+
+	    var filtered = [];
+
+	    var count = results.length;
+
+	    for (var i=0;i < count; i++){
+
+		var r = results[i];
+		
+		switch (r.placetype) {
+		    case "locality":
+		    filtered.push(r);
+		    break;
+		    case "neighbourhood":
+		    filtered.push(r);
+		    default:
+		    continue;
+		}
+	    }
+
+	    return filtered;
 	}
+	
     };
 
     return self;

@@ -107,6 +107,8 @@ window.addEventListener("load", function load(event){
 	var el = e.target;
 	var text = el.value;
 
+	console.log("TEXT", text);
+	
 	if (text.length < 3){
 	    return;
 	}
@@ -119,7 +121,13 @@ window.addEventListener("load", function load(event){
 	    console.log("SAD", err);
 	};
 
-	things.placeholder.client.search(text, on_success, on_error);
+	console.log("SEARCH", text);
+
+	try {
+	    things.placeholder.client.search(text, on_success, on_error);
+	} catch (e){
+	    console.log("WTF",e);
+	}
     };
 
 });
