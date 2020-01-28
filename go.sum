@@ -11,6 +11,8 @@ github.com/aaronland/go-http-bootstrap v0.0.5 h1:g6PehLzQcQjUiXQdYPrl3ZQuNRYTsR6
 github.com/aaronland/go-http-bootstrap v0.0.5/go.mod h1:r8XhNGVceWoc7iwamnU0IIw5RyNyfMmGvcxLA/lQfek=
 github.com/aaronland/go-http-crumb v0.0.4 h1:49nHR5HnTZq/D2WnAY1iWCVSHRfOkhm5YVFaDq6sLYQ=
 github.com/aaronland/go-http-crumb v0.0.4/go.mod h1:tzp6zHKE/pojVXQhcS1J5x5qQkhhxOTvJS2N7S1VVuY=
+github.com/aaronland/go-http-crumb v0.0.5 h1:ZhBkvWUW9wsw+KYnOu0sHAeRpsfY9kj0wh7yA8qGA0M=
+github.com/aaronland/go-http-crumb v0.0.5/go.mod h1:tzp6zHKE/pojVXQhcS1J5x5qQkhhxOTvJS2N7S1VVuY=
 github.com/aaronland/go-http-leaflet v0.0.2 h1:UWRCfHCnknsDkd8jXmMkBcRV40qb0EkGYXn9ReqT+NU=
 github.com/aaronland/go-http-leaflet v0.0.2/go.mod h1:jUzEnGKezjceuNtQJIZWy2nXMhuteRSK0BPIjSSniBw=
 github.com/aaronland/go-http-rewrite v0.0.3/go.mod h1:g62jjXpsArD0lzJLs9bVLR9Locdt3f4OmqFkkJL2rQU=
